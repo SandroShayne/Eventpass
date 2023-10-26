@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using EventPass1.Models;
 
 namespace EventPass1.Models
 {

@@ -72,17 +72,27 @@ namespace EventPass1.Migrations
                     b.Property<int>("EventoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("EventoIdEvento")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UsuarioId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EventoId");
 
+                    b.HasIndex("EventoIdEvento");
+
                     b.HasIndex("UsuarioId");
+
+                    b.HasIndex("UsuarioId1");
 
                     b.ToTable("Ingressos");
                 });
@@ -142,20 +152,35 @@ namespace EventPass1.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("EventPass1.Models.Evento", null)
+                        .WithMany("Ingressos")
+                        .HasForeignKey("EventoIdEvento");
+
                     b.HasOne("EventPass1.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("EventPass1.Models.Usuario", null)
+                        .WithMany("Ingressos")
+                        .HasForeignKey("UsuarioId1");
+
                     b.Navigation("Evento");
 
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("EventPass1.Models.Evento", b =>
+                {
+                    b.Navigation("Ingressos");
+                });
+
             modelBuilder.Entity("EventPass1.Models.Usuario", b =>
                 {
                     b.Navigation("Eventos");
+
+                    b.Navigation("Ingressos");
                 });
 #pragma warning restore 612, 618
         }
